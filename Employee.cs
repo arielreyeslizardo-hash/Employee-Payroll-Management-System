@@ -24,7 +24,7 @@ namespace Payroll {
                 field = value;
             }
         }
-        public double HourlyRate {
+        public decimal HourlyRate {
             get;
             set {
                 if (value < 0) {
@@ -33,7 +33,10 @@ namespace Payroll {
                 field = value;
             }
         }
-        public double HoursWorked {
+        public decimal HourlyRateOvertime {
+            get => 1.5m * HourlyRate;
+        }
+        public decimal HoursWorked {
             get;
             set {
                 if (value < 0 || value > 168) {
@@ -42,18 +45,18 @@ namespace Payroll {
                 field = value;
             }
         }
-        public double WeeklySalary {
-            get => HourlyRate * HoursWorkedRegular + 1.5 * HourlyRate * HoursWorkedOvertime;
+        public decimal HoursWorkedRegular {
+            get => decimal.Min(HoursWorked,40);
         }
-        public double HoursWorkedRegular {
-            get => double.Min(HoursWorked,40);
+        public decimal HoursWorkedOvertime {
+            get => decimal.Max(HoursWorked - 40, 0);
         }
-        public double HoursWorkedOvertime {
-            get => double.Max(HoursWorked - 40, 0);
+        public decimal WeeklySalary {
+            get => HourlyRate * HoursWorkedRegular + HourlyRateOvertime * HoursWorkedOvertime;
         }
         public PaymentMethod PaymentMethod { get; set; }
 
-        public Employee(uint id, string name, double hourlyRate, PaymentMethod paymentMethod) {
+        public Employee(uint id, string name, decimal hourlyRate, PaymentMethod paymentMethod) {
             Id = id;
             Name = name;
             HourlyRate = hourlyRate;
