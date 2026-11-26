@@ -4,19 +4,15 @@ using System.Text;
 
 namespace Payroll {
     internal class Employee {
-        public uint Id { get; private set; }
+        public EmployeeID Id { get; private set; }
         public string Name { get; private set; }
         public double HourlyRate { get; private set; }
         public double HoursWorked { get; private set; }
         public PaymentMethod PaymentMethod { get; set; }
 
-        public Employee(uint id, string name, double hourlyRate, PaymentMethod paymentMethod) {
+        public Employee(EmployeeID id, string name, double hourlyRate, PaymentMethod paymentMethod) {
             // HoursWorked is not included in the constructor because when a new employee is registered, we do not yet know how many hours they have worked.
 
-
-            if (id <= 0) {
-                throw new ArgumentException("Employee ID must be greater than zero.");
-            }
             if (hourlyRate < 0) {
                 throw new ArgumentException("Hourly rate cannot be negative.");
             }
