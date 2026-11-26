@@ -34,8 +34,8 @@ namespace Payroll {
                     double hoursWorked = double.Parse(fields[3], CultureInfo.InvariantCulture);
                     PaymentMethod paymentMethod = (PaymentMethod)Enum.Parse(typeof(PaymentMethod), fields[4]);
 
-                    Employee employee = new Employee(new EmployeeID(id), name, hourlyRate, paymentMethod);
-                    employee.RegisterHoursWorked(hoursWorked);
+                    Employee employee = new Employee(id, name, hourlyRate, paymentMethod);
+                    employee.HoursWorked = hoursWorked;
                     employees.employees.Add(employee);
                 }
             }
