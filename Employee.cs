@@ -42,6 +42,15 @@ namespace Payroll {
                 field = value;
             }
         }
+        public double WeeklySalary {
+            get => HourlyRate * HoursWorkedRegular + 1.5 * HourlyRate * HoursWorkedOvertime;
+        }
+        public double HoursWorkedRegular {
+            get => double.Min(HoursWorked,40);
+        }
+        public double HoursWorkedOvertime {
+            get => double.Max(HoursWorked - 40, 0);
+        }
         public PaymentMethod PaymentMethod { get; set; }
 
         public Employee(uint id, string name, double hourlyRate, PaymentMethod paymentMethod) {
